@@ -22,7 +22,7 @@ STDEV = 1e-3
 KEEP_PROB = 0.5
 LEARNING_RATE = 1e-4 # 0.0009
 EPOCHS = 20
-BATCH_SIZE = 5
+BATCH_SIZE = 2
 
 IMAGE_SHAPE = (160, 576)
 NUM_CLASSES = 2
@@ -91,7 +91,7 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     layer3_out = tf.add(layer3_in_1, layer3_in_2)
 
     # upsample
-    nn_last_layer = tf.layers.conv2d_transpose(output, num_classes, 16, 8, padding='same',
+    nn_last_layer = tf.layers.conv2d_transpose(layer3_out, num_classes, 16, 8, padding='same',
                                 kernel_regularizer=tf.contrib.layers.l2_regularizer(L2_REG))
 
     return nn_last_layer
@@ -111,7 +111,7 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes):
     logits = tf.reshape(nn_last_layer, (-1, num_classes)) # not needed
     correct_label = tf.reshape(correct_label, (-1,num_classes))
     # define loss function
-    cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits, correct_label))
+    cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits = logits, labels = correct_label))
     # define training operation
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_op = optimizer.minimize(cross_entropy_loss)
@@ -143,8 +143,7 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
         batch_number = 0
         for image, label in get_batches_fn(batch_size):
             batch_number += 1
-             _, loss = sess.run([train_op, cross_entropy_loss],
-                               feed_dict={input_image: image, correct_label: label, keep_prob: KEEP_PROB, learning_rate: LEARNING_RATE}) #1e-4
+            _, loss = sess.run([train_op, cross_entropy_loss], feed_dict={input_image: image, correct_label: label, keep_prob: KEEP_PROB, learning_rate: LEARNING_RATE}) #1e-4
             print(batch_number)
             print("Loss: = {:.3f}".format(loss))
         print()
@@ -152,10 +151,10 @@ tests.test_train_nn(train_nn)
 
 
 def run():
-    tests.test_for_kitti_dataset(data_dir)
+    tests.test_for_kitti_dataset(DATA_DIR)
 
     # Download pretrained vgg model
-    helper.maybe_download_pretrained_vgg(data_dir)
+    helper.maybe_download_pretrained_vgg(DATA_DIR)
 
     # OPTIONAL: Train and Inference on the cityscapes dataset instead of the Kitti dataset.
     # You'll need a GPU with at least 10 teraFLOPS to train on.
@@ -179,10 +178,10 @@ def run():
         input_image, keep_prob, layer3_out, layer4_out, layer7_out = load_vgg(sess, vgg_path)
 
         # Creating the rest of the layers for a FCN
-        nn_last_layer = layers(layer3_out, layer4_out, layer7_out, num_classes)
+        nn_last_layer = layers(layer3_out, layer4_out, layer7_out, NUM_CLASSES)
 
         # Create outputs, training operation and loss
-        logits, train_op, cross_entropy_loss = optimize(nn_last_layer, correct_label, learning_rate, num_classes)
+        logits, train_op, cross_entropy_loss = optimize(nn_last_layer, correct_label, learning_rate, NUM_CLASSES)
 
         # Instentiation of the saver
         saver = tf.train.Saver()
