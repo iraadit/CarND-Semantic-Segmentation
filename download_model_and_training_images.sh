@@ -8,6 +8,6 @@ unzip vgg.zip
 rm vgg.zip
 
 # training images
-wget http://kitti.is.tue.mpg.de/kitti/data_road.zip
+wget https://s3.eu-central-1.amazonaws.com/avg-kitti/data_road.zip
 unzip data_road.zip
 rm data_road.zip
