@@ -201,7 +201,7 @@ def run():
         saver.save(sess, './runs/sem_seg_model.ckpt') # RUNS_DIR
 
         # Save inference data using helper.save_inference_samples
-        helper.save_inference_samples(RUNS_DIR, DATA_DIR, sess, image_shape, logits, keep_prob, input_image)
+        helper.save_inference_samples(RUNS_DIR, DATA_DIR, sess, IMAGE_SHAPE, logits, keep_prob, input_image)
 
         # OPTIONAL: Apply the trained model to a video
         # data_sub_dir = 'project_video'
