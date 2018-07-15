@@ -49,14 +49,14 @@ Loss per batch tends to average below 0.03 after 20 epochs.
 
 Below are a few before-after sample images from the output of the fully convolutional network, with the segmentation class overlaid upon the original image in green.
 
-| Before                                                       | After                                                        |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![before1](/Users/iraadit/Dropbox/Courses/Udacity_Self-Driving_Car/3_TERM_3/2_SEMANTIC_SEGMENTATION/CarND-Semantic-Segmentation/doc/um_000007.png) | ![after1](/Users/iraadit/Dropbox/Courses/Udacity_Self-Driving_Car/3_TERM_3/2_SEMANTIC_SEGMENTATION/CarND-Semantic-Segmentation/doc/after_um_000007.png) |
-| ![before2](/Users/iraadit/Dropbox/Courses/Udacity_Self-Driving_Car/3_TERM_3/2_SEMANTIC_SEGMENTATION/CarND-Semantic-Segmentation/doc/um_000047.png) | ![after2](/Users/iraadit/Dropbox/Courses/Udacity_Self-Driving_Car/3_TERM_3/2_SEMANTIC_SEGMENTATION/CarND-Semantic-Segmentation/doc/after_um_000047.png) |
-| ![before3](/Users/iraadit/Dropbox/Courses/Udacity_Self-Driving_Car/3_TERM_3/2_SEMANTIC_SEGMENTATION/CarND-Semantic-Segmentation/doc/uu_000014.png) | ![after3](/Users/iraadit/Dropbox/Courses/Udacity_Self-Driving_Car/3_TERM_3/2_SEMANTIC_SEGMENTATION/CarND-Semantic-Segmentation/doc/after_uu_000014.png) |
-| ![before4](/Users/iraadit/Dropbox/Courses/Udacity_Self-Driving_Car/3_TERM_3/2_SEMANTIC_SEGMENTATION/CarND-Semantic-Segmentation/doc/uu_000073.png) | ![after4](/Users/iraadit/Dropbox/Courses/Udacity_Self-Driving_Car/3_TERM_3/2_SEMANTIC_SEGMENTATION/CarND-Semantic-Segmentation/doc/after_uu_000073.png) |
-| ![before5](/Users/iraadit/Dropbox/Courses/Udacity_Self-Driving_Car/3_TERM_3/2_SEMANTIC_SEGMENTATION/CarND-Semantic-Segmentation/doc/umm_000060.png) | ![after5](/Users/iraadit/Dropbox/Courses/Udacity_Self-Driving_Car/3_TERM_3/2_SEMANTIC_SEGMENTATION/CarND-Semantic-Segmentation/doc/after_umm_000060.png) |
-| ![before6](/Users/iraadit/Dropbox/Courses/Udacity_Self-Driving_Car/3_TERM_3/2_SEMANTIC_SEGMENTATION/CarND-Semantic-Segmentation/doc/um_000074.png) | ![after6](/Users/iraadit/Dropbox/Courses/Udacity_Self-Driving_Car/3_TERM_3/2_SEMANTIC_SEGMENTATION/CarND-Semantic-Segmentation/doc/after_um_000074.png) |
+| Before                         | After                               |
+| ------------------------------ | ----------------------------------- |
+| ![before1](doc/um_000007.png)  | ![after1](doc/after_um_000007.png)  |
+| ![before2](doc/um_000047.png)  | ![after2](doc/after_um_000047.png)  |
+| ![before3](doc/uu_000014.png)  | ![after3](doc/after_uu_000014.png)  |
+| ![before4](doc/uu_000073.png)  | ![after4](doc/after_uu_000073.png)  |
+| ![before5](doc/umm_000060.png) | ![after5](doc/after_umm_000060.png) |
+| ![before6](doc/um_000074.png)  | ![after6](doc/after_um_000074.png)  |
 
 Performance is very good but not perfect, as sometimes sidewalks or other background can wrongly be identified as road in some images, or road can be unidentied in cases of strong shadows (brightness augmentation could help on that point, I implemented it in `helper.py` but didn't make ii run because OpenCV wasn't installed on the Udacity Advanced Deep Learning Amazon AMI).
 
