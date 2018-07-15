@@ -87,6 +87,9 @@ def gen_batch_function(data_folder, image_shape):
                 image = scipy.misc.imresize(scipy.misc.imread(image_file), image_shape)
                 gt_image = scipy.misc.imresize(scipy.misc.imread(gt_image_file), image_shape)
 
+                # Augmentation
+                image = random_brightness(image)
+
                 gt_bg = np.all(gt_image == background_color, axis=2)
                 gt_bg = gt_bg.reshape(*gt_bg.shape, 1)
                 gt_image = np.concatenate((gt_bg, np.invert(gt_bg)), axis=2)
@@ -138,3 +141,23 @@ def save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_p
         sess, logits, keep_prob, input_image, os.path.join(data_dir, 'data_road/testing'), image_shape)
     for name, image in image_outputs:
         scipy.misc.imsave(os.path.join(output_dir, name), image)
+
+def random_brightness(img, brightness_factor_range = 0.3):
+    # for images between 0 and 255
+    if np.random.random() > 0.5:
+        rows, cols, ch = img.shape
+        if (ch == 3):
+            img = cv2.cvtColor(img,cv2.COLOR_RGB2HSV)
+            img = np.array(img, dtype = np.float64)
+            random_bright = np.random.uniform(1-brightness_factor_range, 1+brightness_factor_range)
+            img[:,:,2] = img[:,:,2]*random_bright
+            img[:,:,2][img[:,:,2]>255] = 255
+            img = np.array(img, dtype = np.uint8)
+            img = cv2.cvtColor(img,cv2.COLOR_HSV2RGB)
+        elif (ch == 1):
+            img = np.array(img, dtype = np.float64)
+            random_bright = np.random.uniform(1-brightness_factor_range, 1+brightness_factor_range)
+            img[:,:] = img[:,:]*random_bright
+            img[:,:][img[:,:]>255] = 255
+            img = np.array(img, dtype = np.uint8)
+    return img
